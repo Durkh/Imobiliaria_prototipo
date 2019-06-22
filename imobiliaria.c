@@ -11,59 +11,104 @@ int Escolha(int max);
 tImovel getInfos(size_t choice);
 
 int main(){
+    
+    while(1){
 
-	menu:
-	system("clear");
-	Menu1();
+        menu:
+        system("clear");
+        Menu1();
 
-	switch (Escolha(4)){
-		case 1:
-			system("clear");
-			puts("você deseja adicionar:\n"
-					"1- Casa\n"
-					"2- Apartamento\n"
-					"3- Terreno\n");
-			switch(Escolha(3)){
-				case 1:
-					Insert(getInfos(1), 1);
-					break;
-				case 2:
-					Inser(getInfos(2), 2);
-					break;
-				case 3:
-					Insert(getInfos(3), 3);
-					break;
-			}
-			break;
-		case 2:
-			break;
-		case 3:
-			system("clear");
-						Menu2();
-						switch (Escolha(6)){
-							case 1:
-							case 2:
-							case 3:
-							case 4:
-							case 5:
-								break;
-							case 6:
-								goto menu;
-						}
-			break;
-		case 4:
-		{
-			char input;
-			while(1){
-				system("clear");
-				puts("você tem certeza que deseja sair?(s/n)");
-				scanf("%c", &input);
-				if(input == 's' || input == 'S') return 0;
-				if(input == 'n' || input == 'N') goto menu;
-			}
-		}
-			break;
-	}
+        switch (Escolha(4)){
+            case 1:
+                system("clear");
+                puts("você deseja adicionar:\n"
+                        "1- Casa\n"
+                        "2- Apartamento\n"
+                        "3- Terreno\n");
+                switch(Escolha(3)){
+                    case 1:
+                        Insert(getInfos(1), 1);
+                        break;
+                    case 2:
+                        Insert(getInfos(2), 2);
+                        break;
+                    case 3:
+                        Insert(getInfos(3), 3);
+                        break;
+                }
+                break;
+            case 2:
+                PrintAll();
+                break;
+            case 3:
+                system("clear");
+                Menu2();
+                switch (Escolha(6)){
+                   case 1:
+                   {
+                        system("clear");
+                        char string[50];
+                        printf("digite o título a ser buscado: ");
+                        fgets(string, 50, stdin);
+                        RemoveEnter(string);
+                        SearchForTitle(string);
+                    } break;
+                    case 2:
+                    {
+                        system("clear");
+                        char string[50];
+                        printf("digite o título a ser buscado: ");
+                        fgets(string, 50, stdin);
+                        RemoveEnter(string);
+                        SearchForNeughbourhood(string);
+                    }    
+                        break;
+                    case 3:
+                    {
+                        system("clear");
+                        double temp;
+                        printf("digite o valor a ser procurado: ");
+                        scanf("%lf", &temp);
+                        SearchForValue(temp);
+                    }
+                    case 4:
+                        system("clear");
+                        PrintStatus(true);
+                    break;
+                    case 5:
+                        system("clear");
+                        PrintStatus(false);
+                    break;
+                    case 6:
+                        goto menu;
+                    }
+            break;
+            case 4:
+            {
+                size_t input;
+                system("clear");
+                PrintAll();
+                puts("");
+                puts("");
+                puts("escreva qual o número da entrada que você deseja remover: (nt: digitando 0, você volta ao menu)");
+                scanf("%zu", &input);
+                if(input == 0) break;;
+                else RemoveDado(input);
+            }   break;
+            case 5:
+            {
+                char input;
+                while(1){
+                    system("clear");
+                    puts("você tem certeza que deseja sair?(s/n)");
+                    scanf("%c", &input);
+                    if(input == 's' || input == 'S') return 0;
+                    if(input == 'n' || input == 'N') break;
+                }
+            } break;
+        }
+	
+    }
 
 	return 0;
 }
@@ -79,7 +124,8 @@ void Menu1(){
 	puts("1- Cadastrar novo imóvel");
 	puts("2- Ver imóveis registrados");
 	puts("3- Busca e visualização personalizada");
-	puts("4- salvar e sair");
+    puts("4- Remover entrada");
+	puts("5- salvar e sair");
 
 
 }
@@ -88,7 +134,7 @@ void Menu2(){
 
 	puts("1- Busca de imóvel por título");
 	puts("2- Busca de imóvel por bairro");
-	puts("3- Busca de imóveis por valor");
+	puts("3- Busca de imóveis por valor(precisão de 1 real)");
 	puts("4- Mostrar todos os imóveis disponíveis para venda");
 	puts("5- Mostrar todos os imóveis disponíveis para aluguel");
 	puts("6- voltar");
@@ -114,7 +160,7 @@ tImovel getInfos(size_t choice){
 
 	tImovel buffer;
     
-    puts("insira um título para o anúncio: ");
+    puts("insira um título para o anúncio (simples): ");
     {
         char string[50];
 		fgets(string, 50, stdin);
@@ -162,7 +208,7 @@ tImovel getInfos(size_t choice){
     }
     
     puts("");
-    puts("informe o valor do imóvel: ");
+    puts("informe o valor do imóvel em reais (apenas números): ");
     scanf("%lf", &buffer.valor);
 
 	if(choice == 1){
@@ -170,7 +216,7 @@ tImovel getInfos(size_t choice){
         puts("");
         puts("informe a quantidade de pavimentos do imóvel: ");
         scanf("%zu", &buffer.casa.pavimentos);
-    
+
         puts("");
         puts("informe o número de quartos: ");
         scanf("%zu", &buffer.casa.quartos);
@@ -190,7 +236,7 @@ tImovel getInfos(size_t choice){
         
         puts("");
         puts("informe a quantidade de quartos: ");
-        scanf("%zu", &buffer.Apartamento.quartos);
+        scanf("%zu", &buffer.apartamento.quartos);
         
         puts("");
         puts("informe a posição do apartamento: ");
@@ -208,7 +254,7 @@ tImovel getInfos(size_t choice){
         puts("informe o valor do condomínio: ");
         scanf("%lf", &buffer.apartamento.condominio);
         
-        puts("")
+        puts("");
         puts("informe o numero de vagas da garagem");
         scanf("%zu", &buffer.apartamento.vagasGaragem);
 

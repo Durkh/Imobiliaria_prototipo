@@ -39,16 +39,19 @@ typedef struct{
 
 typedef struct Temp{
 	tImovel imovel;
-	unsigned int num;
+	size_t num;
 	struct Temp* prox;
 }tList;
 
 void Inicializer();
 int Insert(tImovel data, int choice);
 int RemoveInic();
-void Print();
-tList* SearchForData(int data);
-tList* SearchForNumber(int num);
+void PrintAll();
+void PrintSingle(tList* pointer);
+void SearchForValue(double data);
+void SearchForTitle(char string[]);
+void SearchForNeighbourhood(char string[]);
+void PrintStatus(bool venda)
 int RemoveDado(int data);
 
 
