@@ -44,15 +44,16 @@ typedef struct Temp{
 }tList;
 
 void Inicializer();
-int Insert(tImovel data, int choice);
+int Insert(tImovel data);
 int RemoveInic();
 void PrintAll();
 void PrintSingle(tList* pointer);
 void SearchForValue(double data);
 void SearchForTitle(char string[]);
 void SearchForNeighbourhood(char string[]);
-void PrintStatus(bool venda)
-int RemoveDado(int data);
+void PrintStatus(bool venda);
+int RemoveByTtile(char string[]);
+int RemoveByIndex(size_t num);
 
 
 #endif /* EG_LIST_H_ */

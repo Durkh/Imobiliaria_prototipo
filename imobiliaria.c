@@ -9,6 +9,7 @@ void Menu1();
 void Menu2();
 int Escolha(int max);
 tImovel getInfos(size_t choice);
+void RemoveEnter(char string[]);
 
 int main(){
     
@@ -27,13 +28,13 @@ int main(){
                         "3- Terreno\n");
                 switch(Escolha(3)){
                     case 1:
-                        Insert(getInfos(1), 1);
+                        Insert(getInfos(1));
                         break;
                     case 2:
-                        Insert(getInfos(2), 2);
+                        Insert(getInfos(2));
                         break;
                     case 3:
-                        Insert(getInfos(3), 3);
+                        Insert(getInfos(3));
                         break;
                 }
                 break;
@@ -60,7 +61,7 @@ int main(){
                         printf("digite o título a ser buscado: ");
                         fgets(string, 50, stdin);
                         RemoveEnter(string);
-                        SearchForNeughbourhood(string);
+                        SearchForNeighbourhood(string);
                     }    
                         break;
                     case 3:
@@ -92,8 +93,8 @@ int main(){
                 puts("");
                 puts("escreva qual o número da entrada que você deseja remover: (nt: digitando 0, você volta ao menu)");
                 scanf("%zu", &input);
-                if(input == 0) break;;
-                else RemoveDado(input);
+                if(input == 0) break;
+                else RemoveByIndex(input);
             }   break;
             case 5:
             {
@@ -262,7 +263,7 @@ tImovel getInfos(size_t choice){
         buffer.tipo=3;
         puts("");
         puts("informe a área do terreno: ");
-        scanf("%lf", buffer.area);
+        scanf("%lf", &buffer.area);
 	}
 
 	return buffer;

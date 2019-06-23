@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "Eg_list.h"
-// fazer o print ser baseado em for com um contador i;
-#define casa 1
+
+/*#define casa 1
 #define apartamento 2
-#define terreno 3
+#define terreno 3*/
 
 tList* inicio = NULL;
 
@@ -80,7 +81,7 @@ void PrintAll() {
 			if (pointer->imovel.venda == true)
 				printf("o imóvel está à VENDA\n");
 			else
-				printf("o imóvel está sendo ALUGADO\n");
+                printf("o imóvel está sendo ALUGADO\n");
 			puts("");
 			printf("valor: %lfR$\n", pointer->imovel.valor);
 			puts("");
@@ -89,7 +90,7 @@ void PrintAll() {
 			printf("quartos: %zu\n", pointer->imovel.casa.quartos);
 			puts("");
 			printf("área do terreno: %lf", pointer->imovel.area);
-			puts("área construída: %lf", pointer->imovel.casa.areaCons);
+			printf("área construída: %lf", pointer->imovel.casa.areaCons);
 			puts("");
 			puts("");
 
@@ -123,7 +124,7 @@ void PrintAll() {
 			puts("");
 			printf("andar do apartamento: %zu\n", pointer->imovel.apartamento.andar);
 			puts("");
-			printf("valor do condomínio: %lf\n", pointer->imovel.apartamento.codominio);
+			printf("valor do condomínio: %lf\n", pointer->imovel.apartamento.condominio);
 			puts("");
 			printf("quantidade de vagas na garagem: %zu\n", pointer->imovel.apartamento.vagasGaragem);
 			puts("");
@@ -193,7 +194,7 @@ void PrintSingle(tList* pointer){
 		printf("quartos: %zu\n", pointer->imovel.casa.quartos);
 		puts("");
 		printf("área do terreno: %lf", pointer->imovel.area);
-		puts("área construída: %lf", pointer->imovel.casa.areaCons);
+		printf("área construída: %lf", pointer->imovel.casa.areaCons);
 		puts("");
 		puts("");
 
@@ -227,7 +228,7 @@ void PrintSingle(tList* pointer){
 		puts("");
 		printf("andar do apartamento: %zu\n", pointer->imovel.apartamento.andar);
 		puts("");
-		printf("valor do condomínio: %lf\n", pointer->imovel.apartamento.codominio);
+		printf("valor do condomínio: %lf\n", pointer->imovel.apartamento.condominio);
 		puts("");
 		printf("quantidade de vagas na garagem: %zu\n", pointer->imovel.apartamento.vagasGaragem);
 		puts("");
@@ -268,10 +269,10 @@ void SearchForValue(double data) {
 
 	pointer = inicio;
 	while (pointer != NULL) {
-		if (pointer->imovel.valor > (data- 1.0) &&  pointer->imovel.valor < (data + 1.0) )
-            printf("%zu. \n" pointer->num);
+		if (pointer->imovel.valor > (data- 1.0) &&  pointer->imovel.valor < (data + 1.0) ){
+            printf("%zu .\n", pointer->num);
 			PrintSingle(pointer);
-		else
+        } else
 			pointer = pointer->prox;
 	}
 	
@@ -288,10 +289,10 @@ void SearchForTitle(char string[]) {
 
 	pointer = inicio;
 	while (pointer != NULL) {
-		if (!strcmp(pointer->imovel.titulo, string))
-            printf("%zu. \n" pointer->num);
+		if (!strcmp(pointer->imovel.titulo, string)){
+            printf("%zu. \n", pointer->num);
 			PrintSingle(pointer);
-		else
+        } else
 			pointer = pointer->prox;
 	}
 	
@@ -308,10 +309,10 @@ void SearchForNeighbourhood(char string[]) {
 
 	pointer = inicio;
 	while (pointer != NULL) {
-		if (!strcmp(pointer->imovel.bairro, string))
-            printf("%zu. \n" pointer->num);
+		if (!strcmp(pointer->imovel.bairro, string)){
+            printf("%zu. \n", pointer->num);
 			PrintSingle(pointer);
-		else
+        } else
 			pointer = pointer->prox;
 	}
 	
@@ -348,7 +349,7 @@ void PrintStatus(bool venda){
     }
 }
 
-int RemoveDado(int data) {
+int RemoveByTitle(char string[]) {
 	tList* pointer, *antes;
 
 	if (inicio == NULL)
@@ -357,7 +358,7 @@ int RemoveDado(int data) {
 		pointer = inicio;
 		antes = inicio;
 		while (pointer != NULL) {
-			if (pointer->return;data == data) {
+			if (!strcmp(pointer->imovel.titulo, string)) {
 				if (pointer == inicio) {
 					inicio = inicio->prox;
 					free(pointer);
@@ -374,4 +375,32 @@ int RemoveDado(int data) {
 		}
 		return 0;
 	}
+}
+
+int RemoveByIndex(size_t num){
+
+    tList* pointer, *antes;
+
+    if (inicio == NULL) return 0;
+
+    pointer= inicio;
+    antes= inicio;
+
+    for(int i=0; i<num; i++){
+        antes= pointer;
+        pointer= pointer->prox;
+    }
+
+    if(pointer == inicio){
+        inicio= inicio->prox;
+        free(pointer);
+        return 1;
+    } else {
+        antes->prox = pointer->prox;
+        free(pointer);
+        return 1;
+    }
+
+    
+return 0;
 }
