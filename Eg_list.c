@@ -195,7 +195,8 @@ void PrintAll() {
 			puts("");
 			printf("CEP: %lu\n", pointer->imovel.cep);
 			puts("");
-			printf("número: %u\n", pointer->imovel.num);
+			if(pointer->imovel.num == 0) puts("SN");
+            else printf("número: %u\n", pointer->imovel.num);
 			puts("");
 			if (pointer->imovel.venda == true)
 				printf("o imóvel está à VENDA\n");
@@ -228,7 +229,8 @@ void PrintAll() {
 			puts("");
 			printf("CEP: %lu\n", pointer->imovel.cep);
 			puts("");
-			printf("número: %u\n", pointer->imovel.num);
+			if(pointer->imovel.num == 0) puts("SN");
+            else printf("número: %u\n", pointer->imovel.num);
 			puts("");
 			if (pointer->imovel.venda == true)
 				printf("o imóvel está à VENDA\n");
@@ -262,7 +264,8 @@ void PrintAll() {
 			puts("");
 			printf("CEP: %lu\n", pointer->imovel.cep);
 			puts("");
-            printf("número: %u\n", pointer->imovel.num);
+            if(pointer->imovel.num == 0) puts("SN");
+            else printf("número: %u\n", pointer->imovel.num);
 			puts("");
 			if (pointer->imovel.venda == true)
 				printf("o imóvel está à VENDA\n");
@@ -286,7 +289,7 @@ void PrintSingle(tList* pointer){
     
 	if (pointer->imovel.tipo == 1) {
 		puts("*-------------------------------*");
-		puts("tipo do imóvel: casa");
+		printf("%u. tipo do imóvel: casa\n", pointer->num);
         puts("");
 		printf("título: %s\n", pointer->imovel.titulo);
 		puts("");
@@ -298,7 +301,8 @@ void PrintSingle(tList* pointer){
 		puts("");
 		printf("CEP: %lu\n", pointer->imovel.cep);
 		puts("");
-		printf("número: %u\n", pointer->imovel.num);
+        if(pointer->imovel.num == 0) puts("SN");
+		else printf("número: %u\n", pointer->imovel.num);
 		puts("");
 		if (pointer->imovel.venda == true)
 		printf("o imóvel está à VENDA\n");
@@ -319,7 +323,7 @@ void PrintSingle(tList* pointer){
 
     } else if (pointer->imovel.tipo == 2) {
 		puts("*-------------------------------*");
-		puts("tipo do imóvel: Apartamento");
+		printf("%u. tipo do imóvel: Apartamento\n", pointer->num);
         puts("");
 		printf("título: %s\n", pointer->imovel.titulo);
 		puts("");
@@ -331,7 +335,8 @@ void PrintSingle(tList* pointer){
 		puts("");
 		printf("CEP: %lu\n", pointer->imovel.cep);
 		puts("");
-		printf("número: %u\n", pointer->imovel.num);
+        if(pointer->imovel.num == 0) puts("SN");
+		else printf("número: %u\n", pointer->imovel.num);
 		puts("");
         if (pointer->imovel.venda == true)
 		printf("o imóvel está à VENDA\n");
@@ -353,7 +358,7 @@ void PrintSingle(tList* pointer){
 		puts("");
     } else if (pointer->imovel.tipo == 3) {
 		puts("*-------------------------------*");
-		puts("tipo do imóvel: terreno");
+		printf("%u. tipo do imóvel: terreno\n", pointer->num);
         puts("");
 		printf("título: %s\n", pointer->imovel.titulo);
 		puts("");
@@ -365,7 +370,8 @@ void PrintSingle(tList* pointer){
 		puts("");
 		printf("CEP: %lu\n", pointer->imovel.cep);
 		puts("");
-		printf("número: %u\n", pointer->imovel.num);
+		if(pointer->imovel.num == 0) puts("SN");
+		else printf("número: %u\n", pointer->imovel.num);
 		puts("");
 		if (pointer->imovel.venda == true)
 			printf("o imóvel está à VENDA\n");
@@ -390,29 +396,20 @@ void SearchForValue(char string[]) {   // in debugging process
         puts("nada foi encontrado com esse valor");
         return;
     }
-
-                                puts("depois if");
     
 	pointer = inicio;
     
-                                    puts("while");
-    
 	while (pointer != NULL) {
-                                            puts("while check");
         sprintf(value, "%.2lf", pointer->imovel.valor);
 		if (!strcmp(string, value)){
-                                            puts("if true");
             printf("%u .\n", pointer->num);
 			PrintSingle(pointer);
             pointer = pointer->prox;
             checker++;
         } else {
-                                puts("else");
 			pointer = pointer->prox;
         }
 	}
-	
-                                puts("while end");
     
 	if(checker==0){
         puts("nada foi encontrado com esse valor");
@@ -486,7 +483,8 @@ void PrintStatus(bool venda){
             if(pointer->imovel.venda == true){
                 PrintSingle(pointer);   
                 pointer=pointer->prox;
-            }
+            } else
+                pointer = pointer->prox;
         }
         return;
     } else if(venda == false){
@@ -494,7 +492,8 @@ void PrintStatus(bool venda){
             if(pointer->imovel.venda==false){
                 PrintSingle(pointer);
                 pointer= pointer->prox;
-            }
+            } else
+                pointer = pointer->prox;
         }
         return;
     }
@@ -613,16 +612,15 @@ void SaveFile(){
 
 void ReadFile(){
 	FILE *fp;
-    tImovel *buffer;
-
+    tImovel buffer;
+    
 	fp = fopen("imobiliariaSav.txt", "r");
     if(fp == NULL){
-        printf("Erro ao ler arquivo");
         return;
     }
     
-	while( fread(buffer, sizeof(tImovel), 1, fp) ){
-        Insert(*buffer);
+	while( fread(&buffer, sizeof(tImovel), 1, fp) ){
+        Insert(buffer);
     }
     
     if(!ferror(fp)) puts("dados lidos com sucesso!");

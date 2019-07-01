@@ -15,17 +15,14 @@ int main(){
     system("clear");
     Initializer();
     
-    fp=fopen("imobiliariaSav.txt", "r");
-    if (fp){
-        ReadFile();
-    }
+    ReadFile();
     
     while(1){
 
         menu:
         Menu1();
 
-        switch (Escolha(6)){
+        switch (Escolha(7)){
             case 1:
                 system("clear");
                 puts("você deseja adicionar:\n"
@@ -77,10 +74,11 @@ int main(){
                         double var;
                         printf("digite o valor a ser procurado: "); 
                         scanf("%lf", &var);
+                        puts("");
                         sprintf(string, "%.2lf", var);
                         RemoveEnter(string);
                         SearchForValue(string); 
-                    }
+                    } break;
                     case 4:
                         system("clear");
                         PrintStatus(true);
@@ -105,13 +103,17 @@ int main(){
             }
             
             case 5:
-                
+                system("clear");
+                Menu3();
                 switch(Escolha(3)){
                    
                     case 1:
                     {
                         system("clear");
                         char string[50];
+                        PrintAll();
+                        puts("");
+                        puts("");
                         printf("digite o título a ser deletado: ");
                         fgets(string, 50, stdin);
                         RemoveEnter(string);
@@ -146,6 +148,7 @@ int main(){
                 } break;
             case 6:
                 SaveFile();
+                system("clear");
                 break;
             case 7:
             {
@@ -182,7 +185,7 @@ void Menu1(){
     puts("4- Editar entrada");
     puts("5- Remover entrada");
     puts("6- Salvar");
-	puts("6- Salvar e sair");
+	puts("7- Salvar e sair");
 }
 
 void Menu2(){
@@ -198,6 +201,6 @@ void Menu2(){
 void Menu3(){
     
     puts("1- Remover por título");
-    puts("2- Remover por ïndice");
+    puts("2- Remover por índice");
     puts("3- voltar");
 }

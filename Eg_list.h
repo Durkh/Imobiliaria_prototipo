@@ -61,8 +61,8 @@ void EditEntry(unsigned int index); //edita uma entrada da lista
 int RemoveByTitle(char string[]); //remove um item baseado no título
 int RemoveByIndex(unsigned int num); //remove um item baseado num índice fornecido
 
-void SaveFile();
-void ReadFile();
+void SaveFile(); //salva
+void ReadFile(); //lê
 
 //funções diversas
 int Escolha(int max);
